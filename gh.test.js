@@ -38,7 +38,7 @@ describe("Github page tests", () => {
     expect(actual).toContain("Get started with Team")
   }, 15000);
 
-  describe("Github page tests Two", () => {
+  
     beforeEach(async () => {
       page1 = await browser.newPage();
       await page1.goto("https://github.com/features/actions");
@@ -74,4 +74,3 @@ describe("Github page tests", () => {
       expect(actual).toContain("Sign up for free")
     }, 30000);
   })
-})
