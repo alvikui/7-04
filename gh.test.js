@@ -7,7 +7,6 @@ let page;
 
 beforeEach(async () => {
   page = await browser.newPage();
-  await page.goto("https://github.com/team");
 });
 
 afterEach(() => {
@@ -15,6 +14,10 @@ afterEach(() => {
 });
 
 describe("Github page tests", () => {
+
+  beforeEach(async () => {
+    await page.goto("https://github.com/team");
+  });
   
   test("The h1 header content'", async () => {
     const firstLink = await page.$("header div div a");
@@ -38,24 +41,6 @@ describe("Github page tests", () => {
     expect(actual).toContain("Get started with Team")
   }, 15000);
 
-  
-    beforeEach(async () => {
-      page1 = await browser.newPage();
-      await page1.goto("https://github.com/features/actions");
-    })
-    
-    afterEach(() => {
-      page1.close();
-    })
-  
-    test("The h1 header content'", async () => {
-      const firstLink = await page1.$("header div div a");
-      await firstLink.click();
-      await page1.waitForSelector('h1');
-      const title2 = await page1.title();
-      expect(title2).toEqual('Features • GitHub Actions · GitHub');
-    }, 20000)
-
     test("The page Every GitHub plan", async () => {
       const btnSelector = ".link-mktg.f4-mktg";
       await page.waitForSelector(btnSelector, {
@@ -73,4 +58,16 @@ describe("Github page tests", () => {
       const actual = await page.$eval(btnSelector, link => link.textContent);
       expect(actual).toContain("Sign up for free")
     }, 30000);
+
+    describe("The h1 header content", () => {
+
+    test("The h1 header content'", async () => {
+      await page.goto("https://github.com/features/actions");
+      const firstLink = await page.$("header div div a");
+      await firstLink.click();
+      await page.waitForSelector('h1');
+      const title2 = await page.title();
+      expect(title2).toEqual('Features • GitHub Actions · GitHub');
+    }, 20000);
   })
+})
